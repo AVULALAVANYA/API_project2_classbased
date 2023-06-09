@@ -11,5 +11,21 @@ class ProductCrud(APIView):
         PJD=ProductSerializer(PQS,many=True)
         return Response(PJD.data)
     def post(self,request):
-        pass
+        PMSD=ProductSerializer(data=request.data)
+        if PMSD.is_valid():
+            PMSD.save()
+            return Response({'massage':'prodict id created'})
+        return Response({'failed':'product is created'})
+
+    def put(self,request):
+        id=request.data['id']
+        PO=Product.objects.get(id=id)
+        UPO=ProductSerializer(PO,data=request.data)
+        if UPO.is_valid():
+            UPO.save()
+            return Response({'message':'product is update'})
+        return Response({'failed':'product is update'})
+        
+
+
 
